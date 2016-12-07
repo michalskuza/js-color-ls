@@ -2,13 +2,14 @@
 
 var fs = require('fs')
 var chalk = require('chalk')
+var path = require('path')
 
-var ls = (path) => {
-  if(!fs.existsSync(path)){
-      console.log(chalk.bgRed('ls: cannot access \''+ path +'\': No such file or directory'))
+var ls = (dirPath) => {
+  if(!fs.existsSync(dirPath)){
+      console.log(chalk.bgRed('ls: cannot access \''+ dirPath +'\': No such file or directory'))
     }else {
-      fs.readdirSync(path).forEach(file => {
-        var st = fs.lstatSync(file);
+      fs.readdirSync(dirPath).forEach(file => {
+        var st = fs.lstatSync(path.join(path.resolve(dirPath), file));
 
         if(st.isDirectory())
           console.log(chalk.bgBlue(file));
